@@ -44,11 +44,19 @@ def load_afriberta():
 
 def load_xlmr():
     global _xlmr_tokenizer, _xlmr_model
-    if _xlmr_model is None:
-        _xlmr_tokenizer = AutoTokenizer.from_pretrained(XLMR_REPO)
-        _xlmr_model = AutoModelForSequenceClassification.from_pretrained(XLMR_REPO)
-        _xlmr_model.to(DEVICE).eval()
+
+    if _xlmr_model is None or _xlmr_tokenizer is None:
+        try:
+            _xlmr_tokenizer = AutoTokenizer.from_pretrained(XLMR_REPO)
+            _xlmr_model = AutoModelForSequenceClassification.from_pretrained(XLMR_REPO)
+            _xlmr_model.to(DEVICE)
+            _xlmr_model.eval()
+        except Exception as e:
+            print("XLM-RoBERTa loading failed:", e)
+            return None, None
+
     return _xlmr_tokenizer, _xlmr_model
+
 
 
 def load_logreg():
@@ -95,6 +103,13 @@ def predict_text(text: str) -> float:
     Returns ensemble probability that the text is FAKE (0.0 – 1.0)
     Uses AfriBERTa + XLM-RoBERTa + Logistic Regression
     """
+
+    xl_tok, xl_model = load_xlmr()
+if xl_tok is None:
+    xlmr_score = None
+else:
+    # normal inference
+
 
     # Load models
     af_tok, af_model = load_afriberta()
