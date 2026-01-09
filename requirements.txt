@@ -9,3 +9,4 @@ pillow
 streamlit
 librosa
 soundfile
+huggingface_hub
