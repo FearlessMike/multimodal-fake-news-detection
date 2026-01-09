@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import pickle
+import joblib
 import numpy as np
 
 # ======================================================
@@ -61,11 +61,15 @@ def load_xlmr():
 
 def load_logreg():
     global _logreg, _tfidf
+
     if _logreg is None or _tfidf is None:
-        with open(LOG_REG_PATH, "rb") as f:
-            _logreg = pickle.load(f)
-        with open(TFIDF_PATH, "rb") as f:
-            _tfidf = pickle.load(f)
+        try:
+            _logreg = joblib.load(LOG_REG_PATH)
+            _tfidf = joblib.load(TFIDF_PATH)
+        except Exception as e:
+            print("❌ Failed to load Logistic Regression or TF-IDF:", e)
+            return None, None
+
     return _logreg, _tfidf
 
 
