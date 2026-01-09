@@ -1,3 +1,5 @@
+[🤗 AfriBERTa Fake News Model](https://huggingface.co/FearlessMike/afriberta-fake-news)
+
 ## 🔗 Pretrained Models (Hosted on Hugging Face)
 
 This project uses **fine-tuned transformer models hosted on Hugging Face Hub**.
