@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Temporary files
+temp_audio.wav
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data (not needed for inference)
+data/
+
+# large models (never commit)
+model/afriberta_finetuned/
+model/final_xlm_roberta_model/
+model/*.zip
+*.pt
+*.bin
+*.safetensors
+
