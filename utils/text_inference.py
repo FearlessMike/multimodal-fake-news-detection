@@ -104,21 +104,21 @@ def predict_text(text: str) -> float:
     Uses AfriBERTa + XLM-RoBERTa + Logistic Regression
     """
 
-    xl_tok, xl_model = load_xlmr()
-if xl_tok is None:
-    xlmr_score = None
-else:
-    # normal inference
-
-
     # Load models
     af_tok, af_model = load_afriberta()
     xl_tok, xl_model = load_xlmr()
     logreg, tfidf = load_logreg()
 
-    # Individual predictions
+    # AfriBERTa prediction
     af_score = _predict_transformer(text, af_tok, af_model)
-    xlmr_score = _predict_transformer(text, xl_tok, xl_model)
+
+    # XLM-R prediction (fallback-safe)
+    if xl_tok is not None and xl_model is not None:
+        xlmr_score = _predict_transformer(text, xl_tok, xl_model)
+    else:
+        xlmr_score = af_score  # fallback if XLM-R fails
+
+    # Logistic Regression prediction
     logreg_score = _predict_logreg(text, logreg, tfidf)
 
     # Weighted ensemble
