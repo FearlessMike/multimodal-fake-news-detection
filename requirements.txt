@@ -1,6 +1,7 @@
 streamlit
 torchvision
 torch
+librosa
 transformers
 scikit-learn==1.8.0
 numpy
