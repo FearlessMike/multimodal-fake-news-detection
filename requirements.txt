@@ -1,4 +1,5 @@
 streamlit
+torchvision
 torch
 transformers
 scikit-learn==1.8.0
